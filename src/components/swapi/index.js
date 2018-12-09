@@ -1,5 +1,13 @@
+/**
+ * @author aferyannie@gmail.com
+ * @since 7 December 2019
+ */
+
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setPerson } from "../../actions";
 
 class Swapi extends Component {
 	constructor(props) {
@@ -7,19 +15,16 @@ class Swapi extends Component {
 		this.state = {
 			people: [],
 			currentpage: 1,
-			index: 1,
-			about: [],
-			url: '',
 		}
-		this.previouspage = this.previouspage.bind(this);
-		this.nextpage = this.nextpage.bind(this);
-		this.aboutperson = this.aboutperson.bind(this);
+		this.previouspage = this.previouspage.bind(this); // Set binding to previouspage function.
+		this.nextpage = this.nextpage.bind(this); // Set binding to nextpage function.
 	}
 
-	async componentDindexMount() {
+	async componentDidMount() {
+		// Call swapi using axios.
 		const res = await axios.get("https://swapi.co/api/people/")
 		this.setState({ 
-			people: res.data.results 
+			people: res.data.results, // Set results to the state.
 		});
 	}
 
@@ -30,8 +35,7 @@ class Swapi extends Component {
 			await this.setState({ currentpage: this.state.currentpage + 1 })
 			const res = await axios.get('https://swapi.co/api/people/?page=' + this.state.currentpage);
 				this.setState({ 
-					people: res.data.results, 
-					index: this.state.index + 10
+					people: res.data.results, // Set results to the state.
 				});
 		}
 	}
@@ -43,26 +47,9 @@ class Swapi extends Component {
 			await this.setState({ currentpage: this.state.currentpage - 1 })
 			const res = await axios.get('https://swapi.co/api/people/?page=' + this.state.currentpage);
 				this.setState({ 
-					people: res.data.results, 
-					index: this.state.index - 10, 
+					people: res.data.results, // Set results to the state.
 				});
 		}
-	}
-	
-	/* Create function aboutperson handler. */
-	async aboutperson(event) {
-		const id = event.target.getAttribute('data-key');
-		const res = await axios.get('https://swapi.co/api/people/?page=' + this.state.currentpage);
-			this.setState({
-				url: res.data.results[id].url
-			});
-			const result = await axios.get(this.state.url);
-				if(result.status === 200){
-					this.setState({
-						about: result.data,
-					});
-					console.log(this.state.about);
-				}
 	}
 
 	render() {
@@ -70,9 +57,9 @@ class Swapi extends Component {
 			<div className="container">
 				{/* Navigation Bar */}
 				<div className="navbar">
-					<button onClick={this.previouspage}>Previous</button>
-					<button disabled={true}>{this.state.currentpage}</button>
-					<button onClick={this.nextpage}>Next</button>
+					<button onClick={ this.previouspage }>Previous</button> {/* Button to the previous page. */}
+					<button disabled={true}>{ this.state.currentpage }</button> {/* DisabledButton to display current page. */}
+					<button onClick={ this.nextpage }>Next</button> {/* Button to the next page. */}
 				</div>
 				{/* Header Page */}
 				<div className="header">
@@ -81,25 +68,26 @@ class Swapi extends Component {
 				</div>
 				{/* Body Page */}
 				<div className="body">
-					{this.state.people.map((person, index) =>
-						// <p 
-						// 	key={index = index + this.state.index}
-						<p 
-							key={index}
-							onClick={this.aboutperson} 
-							data-key={index}> 
-								{person.name} <br></br>
-								{person.url} <br></br>
-						</p>
+					{ this.state.people.map((person, index) =>
+						// Set link to about page.
+						<Link 
+							className="bodytext" 
+							to="/about" 
+							key={index} 
+							onClick={() => { this.props.setPerson(person) }}>
+								<p>
+									{person.name} <br></br>
+								</p>
+						</Link>
 					)}
 				</div>
 				{/* Footer Page */}
 				<div className="footer">
-					<p>Page {this.state.currentpage}</p>
+					<p>Page { this.state.currentpage }</p>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default Swapi;
+export default connect(null, { setPerson })(Swapi);

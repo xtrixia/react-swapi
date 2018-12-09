@@ -36,6 +36,18 @@ h5 {
 
 .body {
   text-align: center;
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.bodytext {
+  text-align: center;
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.bodytext:hover {
+  color: yellow;
 }
 
 .footer {
@@ -58,8 +70,8 @@ h5 {
 .navbar button {
   background-color: inherit;
   position: relative;
-  left: 40%;
-  right: 60%;
+  left: 45%;
+  right: 55%;
   border: none;
   outline: none;
   cursor: pointer;
@@ -75,5 +87,30 @@ h5 {
 
 /* Create an active/current navbarlink class */
 .navbar button.active {
+  background-color: #ccc;
+}
+
+.homepage {
+  background-color: inherit;
+  position: relative;
+  left: 45%;
+  right: 55%;
+  display: block;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 1px;
+  transition: 0.3s;
+  font-size: 17px;
+  text-decoration: none;
+  color: black;
+}
+
+.homepage:hover {
+  background-color: #ddd;
+  width: 50px;
+}
+
+.homepage.active {
   background-color: #ccc;
 }
