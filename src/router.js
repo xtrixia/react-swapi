@@ -7,19 +7,21 @@ import Swapi from "./components/swapi";
 import About from "./components/about";
 
 const store = createStore(rootReducer);
-store.subscribe(() => console.log('store', store.getState())); // Logging to check store.
+store.subscribe(() => console.log("store", store.getState())); // Logging to check store.
 
 const Router = () => (
-  <Provider store={store}> {/* Provide store using provider from react-redux module. */}
-		<BrowserRouter>
-			<div>
-				<Switch>
-					<Route path="/" exact component={Swapi} />
-					<Route path="/about" component={About} />
-				</Switch>
-			</div>
-		</BrowserRouter>
-	</Provider>
+  <Provider store={store}>
+    {" "}
+    {/* Provide store using provider from react-redux module. */}
+    <BrowserRouter>
+      <div>
+        <Switch>
+          <Route path="/" exact component={Swapi} />
+          <Route path="/about" component={About} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  </Provider>
 );
 
 export default Router;
