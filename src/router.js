@@ -5,6 +5,7 @@ import { createStore } from "redux";
 import rootReducer from "./reducers";
 import Swapi from "./components/swapi";
 import About from "./components/about";
+import GlobalStyles from "./commons/GlobalStyles";
 
 const store = createStore(rootReducer);
 store.subscribe(() => console.log("store", store.getState())); // Logging to check store.
@@ -15,6 +16,7 @@ const Router = () => (
     {/* Provide store using provider from react-redux module. */}
     <BrowserRouter>
       <div>
+        <GlobalStyles />
         <Switch>
           <Route path="/" exact component={Swapi} />
           <Route path="/about" component={About} />
