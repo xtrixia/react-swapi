@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { storiesOf } from "@storybook/react";
-import Header from "../commons/Header";
 import BodyText from "../commons/BodyText";
 import styled from "styled-components";
 
@@ -54,18 +53,10 @@ storiesOf("Buttons", module).add("Pages ReadOnly", () => (
 storiesOf("Components", module)
   .add("All", () => (
     <div>
-      <Header style={{ color: "white", fontFamily: "Geneva" }}>
-        This is Header
-      </Header>
       <BodyText style={{ color: "black", margin: 15 }}>
         This is BodyText
       </BodyText>
     </div>
-  ))
-  .add("Header", () => (
-    <Header style={{ color: "white", fontFamily: "Geneva" }}>
-      This is Header
-    </Header>
   ))
   .add("BodyText", () => (
     <BodyText style={{ color: "black", margin: 15 }}>This is BodyText</BodyText>

@@ -1,73 +1,18 @@
 /**
  * @author aferyannie@gmail.com
- * @since 7 December 2019
+ * @since 7 December 2018
  */
 
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { setPerson } from "../../actions";
 import styled from "styled-components";
-import Header from "../../commons/Header";
+import Particle from "react-particles-js";
+
+import dataSetting from "../../libs/particlesjs-config.json";
+import { setPerson } from "../../actions";
 import BodyText from "../../commons/BodyText";
-
-const Navbar = styled.div`
-  overflow: hidden;
-  text-align: center;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-  margin: auto;
-`;
-
-const Navbtn = styled.button`
-	background-color: inherit;
-	position: relative;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	padding: 14px 16px;
-	transition: 0.3s;
-	font-size: 17px;
-
-	:hover {
-		background-color: #ddd;
-	} 
-	
-	:active {
-		background-color: #ccc;
-`;
-
-const Heading1 = styled.h1`
-  color: goldenrod;
-  text-align: center;
-  font-family: Geneva;
-`;
-
-const Heading2 = styled.h5`
-  color: whitesmoke;
-  text-align: center;
-  font-family: Tahoma;
-`;
-
-const StyledLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-
-  &:focus,
-  &:hover {
-    color: yellow;
-  }
-`;
-
-const Footer = styled.div`
-  cursor: not-allowed;
-  color: whitesmoke;
-  text-align: center;
-  font-family: Tahoma;
-  font-size: 9pt;
-  padding: 25pt;
-`;
 
 class Swapi extends Component {
   constructor(props) {
@@ -118,7 +63,8 @@ class Swapi extends Component {
 
   render() {
     return (
-      <Fragment>
+      <Wrapper>
+        <Particle className="particle" params={dataSetting} />
         {/* Navigation Bar */}
         <Navbar>
           <Navbtn onClick={this.previouspage}>Previous</Navbtn>{" "}
@@ -129,10 +75,8 @@ class Swapi extends Component {
           {/* Button to the next page. */}
         </Navbar>
         {/* Header Page */}
-        <Header>
-          <Heading1>WELCOME TO SWAPIL</Heading1>
-          <Heading2>May the force be with you.</Heading2>
-        </Header>
+        <Heading1>WELCOME TO SWAPIL</Heading1>
+        <Heading2>May the force be with you.</Heading2>
         {/* Body Page */}
         <BodyText>
           {this.state.people.map((person, index) => (
@@ -154,7 +98,7 @@ class Swapi extends Component {
         <Footer>
           <p>Page {this.state.currentpage}</p>
         </Footer>
-      </Fragment>
+      </Wrapper>
     );
   }
 }
@@ -163,3 +107,92 @@ export default connect(
   null,
   { setPerson }
 )(Swapi);
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: black;
+  background-size: cover;
+  * {
+    box-sizing: border-box;
+  }
+
+  .blur {
+    -webkit-filter: blur(5px);
+    -o-filter: blur(5px);
+    filter: blur(5px);
+    filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius='5');
+  }
+
+  .particle {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+`;
+
+const Navbar = styled.div`
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  margin: auto;
+`;
+
+const Navbtn = styled.button`
+	background-color: inherit;
+	position: relative;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+	font-size: 17px;
+
+	:hover {
+		background-color: #ddd;
+	} 
+	
+	:active {
+		background-color: #ccc;
+`;
+
+const Heading1 = styled.h1`
+  color: goldenrod;
+  text-align: center;
+  font-family: Overlock;
+`;
+
+const Heading2 = styled.h5`
+  color: whitesmoke;
+  text-align: center;
+  font-family: Pangolin;
+`;
+
+const StyledLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    color: yellow;
+  }
+`;
+
+const Footer = styled.div`
+  color: whitesmoke;
+  text-align: center;
+  font-family: Pangolin;
+  font-size: 9pt;
+  padding: 25pt;
+`;
