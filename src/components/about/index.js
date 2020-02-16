@@ -1,25 +1,37 @@
 /**
+ * @flow
  * @author aferyannie@gmail.com
  * @since 8 December 2018
  */
 
-import React, { Component } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import Particle from "react-particles-js";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import Particle from 'react-particles-js';
 
-import dataSetting from "../../libs/particlesjs-config.json";
-import BodyText from "../../commons/BodyText";
-import Films from "../helpers/films";
-import Appeareance from "../helpers/appeareance";
+import dataSetting from '../../libs/particlesjs-config.json';
+import BodyText from '../../commons/BodyText';
+import Films from '../helpers/films';
+import Appeareance from '../helpers/appeareance';
 
-class About extends Component {
+type Props = {
+  person: any
+};
+
+type State = {
+  place: string,
+  films: Array<any>,
+  click1: boolean,
+  click2: boolean
+};
+
+class About extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
-      place: "",
+      place: '',
       films: [],
       click1: false,
       click2: false
@@ -67,12 +79,12 @@ class About extends Component {
     } = this.props.person; // Create variable to make it easier to call.
     return (
       <Wrapper>
-        <Particle className="particle" params={dataSetting} />
+        <Particle className='particle' params={dataSetting} />
         {/* Navigation Bar */}
         <Navbar>
-          <Link className="homepage" to="/" style={{ textDecoration: "none" }}>
+          <Link className='homepage' to='/' style={{ textDecoration: 'none' }}>
             Home
-          </Link>{" "}
+          </Link>{' '}
           {/* Link to the homepage. */}
         </Navbar>
         {/* Header Page */}
@@ -86,32 +98,32 @@ class About extends Component {
           {gender} <br />
           {this.state.place} <br />
           {birth_year} <br />
-          {height + " cm"} <br />
-          {mass + " kg"} <br />
+          {height + ' cm'} <br />
+          {mass + ' kg'} <br />
           <button
             onClick={this.cek1}
             style={{
-              backgroundColor: "transparent",
-              color: "white",
+              backgroundColor: 'transparent',
+              color: 'white',
               marginTop: 30,
-              border: "none"
+              border: 'none'
             }}
           >
-            <h4 style={{ color: "yellow" }}>Films</h4>
+            <h4 style={{ color: 'yellow' }}>Films</h4>
             {this.state.click1 ? <Films film={this.state.films} /> : null}
           </button>
           <button
             onClick={this.cek2}
             style={{
-              backgroundColor: "transparent",
-              color: "white",
+              backgroundColor: 'transparent',
+              color: 'white',
               marginLeft: 20,
               paddingLeft: 15,
               paddingRight: 15,
-              border: "none"
+              border: 'none'
             }}
           >
-            <h4 style={{ color: "yellow" }}>Appeareance</h4>
+            <h4 style={{ color: 'yellow' }}>Appeareance</h4>
             {this.state.click2 ? (
               <Appeareance
                 hair={hair_color}
@@ -131,10 +143,7 @@ function mapStateToProps(state) {
   return { person: state };
 }
 
-export default connect(
-  mapStateToProps,
-  null
-)(About);
+export default connect(mapStateToProps, null)(About);
 
 const Wrapper = styled.div`
   width: 100%;

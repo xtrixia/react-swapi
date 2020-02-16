@@ -1,33 +1,41 @@
 /**
+ * @flow
  * @author aferyannie@gmail.com
  * @since 7 December 2018
  */
 
-import React, { Component } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import Particle from "react-particles-js";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import Particle from 'react-particles-js';
 
-import dataSetting from "../../libs/particlesjs-config.json";
-import { setPerson } from "../../actions";
-import BodyText from "../../commons/BodyText";
+import dataSetting from '../../libs/particlesjs-config.json';
+import { setPerson } from '../../actions';
+import BodyText from '../../commons/BodyText';
 
-class Swapi extends Component {
+type Props = {
+  setPerson: Function
+};
+
+type State = {
+  people: Array<any>,
+  currentpage: number
+};
+
+class Swapi extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       people: [],
       currentpage: 1
     };
-    this.previouspage = this.previouspage.bind(this); // Set binding to previouspage function.
-    this.nextpage = this.nextpage.bind(this); // Set binding to nextpage function.
   }
 
   async componentDidMount() {
     // Call swapi using axios.
-    const res = await axios.get("https://swapi.co/api/people/");
+    const res = await axios.get('https://swapi.co/api/people/');
     this.setState({
       people: res.data.results // Set results to the state.
     });
@@ -35,11 +43,11 @@ class Swapi extends Component {
 
   /* Create function nextpage handler. */
   async nextpage() {
-    if (this.state.currentpage === 9) alert("Currently on the last page.");
+    if (this.state.currentpage === 9) alert('Currently on the last page.');
     else {
       await this.setState({ currentpage: this.state.currentpage + 1 });
       const res = await axios.get(
-        "https://swapi.co/api/people/?page=" + this.state.currentpage
+        'https://swapi.co/api/people/?page=' + this.state.currentpage
       );
       this.setState({
         people: res.data.results // Set results to the state.
@@ -49,11 +57,11 @@ class Swapi extends Component {
 
   /* Create function previouspage handler. */
   async previouspage() {
-    if (this.state.currentpage === 1) alert("Currently on the first page.");
+    if (this.state.currentpage === 1) alert('Currently on the first page.');
     else {
       await this.setState({ currentpage: this.state.currentpage - 1 });
       const res = await axios.get(
-        "https://swapi.co/api/people/?page=" + this.state.currentpage
+        'https://swapi.co/api/people/?page=' + this.state.currentpage
       );
       this.setState({
         people: res.data.results // Set results to the state.
@@ -64,14 +72,14 @@ class Swapi extends Component {
   render() {
     return (
       <Wrapper>
-        <Particle className="particle" params={dataSetting} />
+        <Particle className='particle' params={dataSetting} />
         {/* Navigation Bar */}
         <Navbar>
-          <Navbtn onClick={this.previouspage}>Previous</Navbtn>{" "}
+          <Navbtn onClick={this.previouspage}>Previous</Navbtn>{' '}
           {/* Button to the previous page. */}
-          <Navbtn disabled={true}>{this.state.currentpage}</Navbtn>{" "}
+          <Navbtn disabled={true}>{this.state.currentpage}</Navbtn>{' '}
           {/* DisabledButton to display current page. */}
-          <Navbtn onClick={this.nextpage}>Next</Navbtn>{" "}
+          <Navbtn onClick={this.nextpage}>Next</Navbtn>{' '}
           {/* Button to the next page. */}
         </Navbar>
         {/* Header Page */}
@@ -82,7 +90,7 @@ class Swapi extends Component {
           {this.state.people.map((person, index) => (
             // Set link to about page.
             <StyledLink
-              to="/about"
+              to='/about'
               key={index}
               onClick={() => {
                 this.props.setPerson(person);
@@ -92,7 +100,7 @@ class Swapi extends Component {
                 {person.name} <br />
               </p>
             </StyledLink>
-          ))}{" "}
+          ))}
         </BodyText>
         {/* Footer Page */}
         <Footer>
@@ -103,10 +111,7 @@ class Swapi extends Component {
   }
 }
 
-export default connect(
-  null,
-  { setPerson }
-)(Swapi);
+export default connect(null, { setPerson })(Swapi);
 
 const Wrapper = styled.div`
   width: 100%;
